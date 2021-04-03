@@ -36,8 +36,7 @@ public class CourseActivity extends AppCompatActivity
 
         RecyclerView recycler_view = findViewById(R.id.recycler_view);
 
-        CourseRepository courseRepository = new CourseRepository(this);
-        courseRepository.findAll(result ->
+        (new CourseRepository(this)).findAll(result ->
         {
             GsonBuilder gsonBuilder = new GsonBuilder();
             Gson gson = gsonBuilder.create();

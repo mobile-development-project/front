@@ -3,7 +3,6 @@ package be.svv.mobileapplication;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -15,7 +14,7 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 
-public class MainActivity extends AppCompatActivity
+public class LoginActivity extends AppCompatActivity
 {
 
     SignInButton signin;
@@ -41,6 +40,12 @@ public class MainActivity extends AppCompatActivity
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
+        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
+        if (acct != null)
+        {
+            startActivity(new Intent(this, SecondaryActivity.class));
+        }
     }
 
     private void signIn ()
@@ -69,7 +74,7 @@ public class MainActivity extends AppCompatActivity
         try
         {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-            startActivity(new Intent(MainActivity.this, SecondaryActivity.class));
+            startActivity(new Intent(LoginActivity.this, SecondaryActivity.class));
         }
         catch (ApiException e)
         {
