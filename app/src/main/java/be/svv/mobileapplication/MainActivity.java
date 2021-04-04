@@ -12,19 +12,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import be.svv.entity.Course;
 import be.svv.mobileapplication.course.CourseActivity;
 import be.svv.mobileapplication.security.LoginActivity;
 
 public class MainActivity extends AppCompatActivity
 {
 
-    TextView name, email, id;
     Button signOut;
-    Course course;
     GoogleSignInClient mGoogleSignInClient;
 
     @Override
