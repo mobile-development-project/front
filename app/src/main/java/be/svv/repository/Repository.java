@@ -4,7 +4,6 @@ import android.content.Context;
 import android.util.Log;
 
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 
 import be.svv.service.Volley.VolleyCallback;
@@ -15,13 +14,11 @@ public class Repository
 
     protected final String URL;
     protected final Context context;
-    protected RequestQueue queue;
 
     public Repository (String URL, Context context)
     {
         this.URL = URL;
         this.context = context;
-        queue = VolleySingleton.getInstance(context).getRequestQueue();
     }
 
     /**
@@ -61,6 +58,7 @@ public class Repository
         {
             Log.e("ERROR", error.getMessage());
         });
-        queue.add(stringRequest);
+
+        VolleySingleton.getInstance(context).addToRequestQueue(stringRequest);
     }
 }
