@@ -3,36 +3,23 @@ package be.svv.mobileapplication;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import be.svv.entity.Assignment;
 import be.svv.entity.Course;
-import be.svv.entity.Entity;
-import be.svv.entity.User;
-import be.svv.globals.ApiUrl;
-import be.svv.repository.CategoryRepository;
-import be.svv.service.Volley.VolleyCallback;
+import be.svv.mobileapplication.course.CourseActivity;
+import be.svv.mobileapplication.security.LoginActivity;
 
-public class SecondaryActivity extends AppCompatActivity
+public class MainActivity extends AppCompatActivity
 {
 
     TextView name, email, id;
@@ -71,7 +58,8 @@ public class SecondaryActivity extends AppCompatActivity
     {
         mGoogleSignInClient.signOut().addOnCompleteListener(this, task ->
         {
-            Toast.makeText(SecondaryActivity.this, "Signed out successfully !", Toast.LENGTH_LONG).show();
+            Toast.makeText(MainActivity.this, "Signed out successfully !", Toast.LENGTH_LONG).show();
+            startActivity(new Intent(this, LoginActivity.class));
             finish();
         });
     }

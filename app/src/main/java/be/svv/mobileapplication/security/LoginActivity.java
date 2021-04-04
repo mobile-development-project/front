@@ -1,4 +1,4 @@
-package be.svv.mobileapplication;
+package be.svv.mobileapplication.security;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +13,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
+
+import be.svv.mobileapplication.R;
+import be.svv.mobileapplication.MainActivity;
 
 public class LoginActivity extends AppCompatActivity
 {
@@ -44,7 +47,8 @@ public class LoginActivity extends AppCompatActivity
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
         if (acct != null)
         {
-            startActivity(new Intent(this, SecondaryActivity.class));
+            startActivity(new Intent(this, MainActivity.class));
+            finish();
         }
     }
 
@@ -74,7 +78,7 @@ public class LoginActivity extends AppCompatActivity
         try
         {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-            startActivity(new Intent(LoginActivity.this, SecondaryActivity.class));
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
         }
         catch (ApiException e)
         {
