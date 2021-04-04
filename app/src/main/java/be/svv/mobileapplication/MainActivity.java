@@ -10,6 +10,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -43,6 +44,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
+
     }
 
     public void goToCourses (View view)

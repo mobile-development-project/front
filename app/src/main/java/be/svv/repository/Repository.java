@@ -3,8 +3,15 @@ package be.svv.repository;
 import android.content.Context;
 import android.util.Log;
 
+import com.android.volley.NetworkError;
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.toolbox.StringRequest;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
 
 import be.svv.service.Volley.VolleyCallback;
 import be.svv.service.Volley.VolleySingleton;
@@ -53,10 +60,22 @@ public class Repository
     {
         StringRequest stringRequest = new StringRequest(method, url, response ->
         {
+            Log.e("ERROR", response);
             callback.onSuccess(response);
         }, error ->
         {
-            Log.e("ERROR", error.getMessage());
+            NetworkResponse response = error.networkResponse;
+            try
+            {
+                String responseData = new String(response.data);
+                JSONObject responseObject = new JSONObject(responseData);
+                Log.d("ERROR", responseData);
+                //Log.e("ERROR", responseObject.optString("message"));
+            }
+            catch (JSONException e)
+            {
+                e.printStackTrace();
+            }
         });
 
         VolleySingleton.getInstance(context).addToRequestQueue(stringRequest);

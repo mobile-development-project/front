@@ -1,4 +1,4 @@
-package be.svv.mobileapplication.security;
+    package be.svv.mobileapplication.security;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,6 +6,10 @@ import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -41,7 +45,7 @@ public class LoginActivity extends AppCompatActivity
             }
         });
 
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken(getString(R.string.default_web_client_id)).requestEmail().build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
@@ -78,8 +82,10 @@ public class LoginActivity extends AppCompatActivity
         try
         {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-            startActivity(new Intent(LoginActivity.this, MainActivity.class));
-            finish();
+            String idToken = account.getIdToken();
+
+            //startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            //finish();
         }
         catch (ApiException e)
         {
