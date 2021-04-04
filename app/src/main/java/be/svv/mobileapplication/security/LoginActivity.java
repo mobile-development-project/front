@@ -79,6 +79,7 @@ public class LoginActivity extends AppCompatActivity
         {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            finish();
         }
         catch (ApiException e)
         {
