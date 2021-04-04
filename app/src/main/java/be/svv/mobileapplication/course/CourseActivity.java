@@ -16,6 +16,7 @@ import be.svv.entity.Course;
 import be.svv.mobileapplication.R;
 import be.svv.repository.CourseRepository;
 import be.svv.service.Gson.GsonSingleton;
+import be.svv.service.Volley.VolleyCallback;
 
 public class CourseActivity extends AppCompatActivity
 {
@@ -28,12 +29,18 @@ public class CourseActivity extends AppCompatActivity
 
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
 
-        (new CourseRepository(this)).findAll(result ->
+        (new CourseRepository(this)).findAll(new VolleyCallback()
         {
-            ArrayList<Course> courses = GsonSingleton.getInstance().fromJson(result, new TypeToken<List<Course>>(){}.getType());
-            CourseAdapter adapter = new CourseAdapter(CourseActivity.this, courses);
-            recyclerView.setAdapter(adapter);
-            recyclerView.setLayoutManager(new LinearLayoutManager(CourseActivity.this));
+            @Override
+            public void onSuccess (String result)
+            {
+                ArrayList<Course> courses = GsonSingleton.getInstance().fromJson(result, new TypeToken<List<Course>>()
+                {
+                }.getType());
+                CourseAdapter adapter = new CourseAdapter(CourseActivity.this, courses);
+                recyclerView.setAdapter(adapter);
+                recyclerView.setLayoutManager(new LinearLayoutManager(CourseActivity.this));
+            }
         });
     }
 }
