@@ -1,5 +1,6 @@
 package be.svv.entity;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class User
@@ -11,11 +12,11 @@ public class User
 
     private String email;
 
-    private Assignment[] assignments;
+    private ArrayList<Assignment> assignments;
 
-    private Category[] categories;
+    private ArrayList<Category> categories;
 
-    private Course[] courses;
+    private ArrayList<Course> courses;
 
     public int getId ()
     {
@@ -32,17 +33,17 @@ public class User
         return roles;
     }
 
-    public Assignment[] getAssignments ()
+    public ArrayList<Assignment> getAssignments ()
     {
         return assignments;
     }
 
-    public Category[] getCategories ()
+    public ArrayList<Category> getCategories ()
     {
         return categories;
     }
 
-    public Course[] getCourses ()
+    public ArrayList<Course> getCourses ()
     {
         return courses;
     }
@@ -50,12 +51,7 @@ public class User
     @Override
     public String toString ()
     {
-        return "User{" + "id=" + id + ", " +
-                "roles=" + Arrays.toString(roles) + ", " +
-                "email='" + email + '\'' + ", " +
-                "assignments=" + Arrays.toString(assignments) + ", " +
-                "categories=" + Arrays.toString(categories) + ", " +
-                "courses=" + Arrays.toString(courses) + '}';
+        return "User{" + "id=" + id + ", " + "roles=" + Arrays.toString(roles) + ", " + "email='" + email + '\'' + ", " + "assignments=" + assignments + ", " + "categories=" + categories + ", " + "courses=" + courses + '}';
     }
 }
 

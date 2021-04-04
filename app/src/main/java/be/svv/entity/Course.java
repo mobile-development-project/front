@@ -1,8 +1,6 @@
 package be.svv.entity;
 
-import androidx.annotation.NonNull;
-
-import java.util.Arrays;
+import java.util.ArrayList;
 
 public class Course extends Entity
 {
@@ -11,7 +9,7 @@ public class Course extends Entity
 
     private String name;
 
-    private Assignment[] assignments;
+    private ArrayList<Assignment> assignments;
 
     public int getId ()
     {
@@ -23,7 +21,7 @@ public class Course extends Entity
         return name;
     }
 
-    public Assignment[] getAssignments ()
+    public ArrayList<Assignment> getAssignments ()
     {
         return assignments;
     }
@@ -31,6 +29,6 @@ public class Course extends Entity
     @Override
     public String toString ()
     {
-        return "Course{" + "id=" + id + ", name='" + name + '\'' + ", assignments=" + Arrays.toString(assignments) + '}';
+        return "Course{" + "id=" + id + ", name='" + name + '\'' + ", assignments=" + assignments + '}';
     }
 }
