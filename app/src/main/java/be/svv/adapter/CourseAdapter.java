@@ -1,6 +1,7 @@
 package be.svv.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,14 +10,20 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
+
+import java.util.ArrayList;
+
 import be.svv.entity.Course;
 import be.svv.mobileapplication.R;
+import be.svv.mobileapplication.course.ShowCourseActivity;
 
 public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseViewHolder>
 {
 
-    private Course[] courses;
+    private ArrayList<Course> courses;
     private Context context;
+
 
     public class CourseViewHolder extends RecyclerView.ViewHolder
     {
@@ -25,13 +32,14 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
         public CourseViewHolder (@NonNull View itemView)
         {
             super(itemView);
-            id = itemView.findViewById(R.id.textView1);
-            assignments = itemView.findViewById(R.id.textView2);
-            name = itemView.findViewById(R.id.textView3);
+            id = itemView.findViewById(R.id.course_id);
+            assignments = itemView.findViewById(R.id.course_assignements);
+            name = itemView.findViewById(R.id.course_name);
         }
+
     }
 
-    public CourseAdapter (Context context, Course[] courses)
+    public CourseAdapter (Context context, ArrayList<Course> courses)
     {
         this.courses = courses;
         this.context = context;
@@ -41,22 +49,31 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
     @Override
     public CourseAdapter.CourseViewHolder onCreateViewHolder (@NonNull ViewGroup parent, int viewType)
     {
-        return new CourseViewHolder(LayoutInflater.from(context).inflate(R.layout.list_course_adapter, parent, false));
+        View view = LayoutInflater.from(context).inflate(R.layout.list_course_adapter, parent, false);
+
+        return new CourseViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder (@NonNull CourseAdapter.CourseViewHolder holder, int position)
     {
-        holder.id.setText(courses[position].getId() + "");
-        holder.name.setText(courses[position].getName());
-        holder.assignments.setText(courses[position].getAssignments().length + " devoir(s)");
+        Course currentItem = courses.get(position);
+        holder.id.setText(currentItem.getId() + "");
+        holder.name.setText(currentItem.getName());
+        holder.assignments.setText(currentItem.getAssignments().size() + " devoir(s)");
 
+        holder.itemView.setOnClickListener(v ->
+        {
+            Intent intent = new Intent(context, ShowCourseActivity.class);
+            intent.putExtra("COURSE", (new Gson()).toJson(currentItem));
+            context.startActivity(intent);
+        });
     }
 
 
     @Override
     public int getItemCount ()
     {
-        return courses.length;
+        return courses.size();
     }
 }
