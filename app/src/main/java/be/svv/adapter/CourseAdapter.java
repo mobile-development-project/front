@@ -10,13 +10,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.gson.Gson;
-
 import java.util.ArrayList;
 
 import be.svv.entity.Course;
 import be.svv.mobileapplication.R;
 import be.svv.mobileapplication.course.ShowCourseActivity;
+import be.svv.service.Gson.GsonSingleton;
 
 public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseViewHolder>
 {
@@ -65,7 +64,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
         holder.itemView.setOnClickListener(v ->
         {
             Intent intent = new Intent(context, ShowCourseActivity.class);
-            intent.putExtra("COURSE", (new Gson()).toJson(currentItem));
+            intent.putExtra("COURSE", (GsonSingleton.getInstance().toJson(currentItem)));
             context.startActivity(intent);
         });
     }
