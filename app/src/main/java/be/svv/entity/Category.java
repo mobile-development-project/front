@@ -1,6 +1,6 @@
 package be.svv.entity;
 
-public class Category
+public class Category extends Entity
 {
 
     private int id;

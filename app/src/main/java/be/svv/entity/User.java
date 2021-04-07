@@ -3,7 +3,7 @@ package be.svv.entity;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class User
+public class User extends Entity
 {
 
     private int id;

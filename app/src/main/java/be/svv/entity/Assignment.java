@@ -2,7 +2,7 @@ package be.svv.entity;
 
 import java.util.Date;
 
-public class Assignment
+public class Assignment extends Entity
 {
 
     private int id;
@@ -22,9 +22,9 @@ public class Assignment
         return id;
     }
 
-    public Course getCourse ()
+    public void setId (int id)
     {
-        return course;
+        this.id = id;
     }
 
     public String getName ()
@@ -32,9 +32,29 @@ public class Assignment
         return name;
     }
 
+    public void setName (String name)
+    {
+        this.name = name;
+    }
+
+    public Course getCourse ()
+    {
+        return course;
+    }
+
+    public void setCourse (Course course)
+    {
+        this.course = course;
+    }
+
     public boolean isAllowNotifications ()
     {
         return allowNotifications;
+    }
+
+    public void setAllowNotifications (boolean allowNotifications)
+    {
+        this.allowNotifications = allowNotifications;
     }
 
     public Date getCreatedAt ()
@@ -42,9 +62,19 @@ public class Assignment
         return createdAt;
     }
 
+    public void setCreatedAt (Date createdAt)
+    {
+        this.createdAt = createdAt;
+    }
+
     public Date getFinishAt ()
     {
         return finishAt;
+    }
+
+    public void setFinishAt (Date finishAt)
+    {
+        this.finishAt = finishAt;
     }
 
     @Override
