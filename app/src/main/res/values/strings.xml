@@ -1,11 +1,6 @@
 <resources>
-    <string name="app_name">Mobile Application</string>
-    <string name="title_activity_secondary">SecondaryActivity</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
-
-    <string name="title_activity_show_assignment">ShowAssignmentActivity</string>
+    <string name="app_name">Student Agenda</string>
+    <string name="title_home">Accueil</string>
+    <string name="title_course">Cours</string>
+    <string name="fragment_blank">Blank Fragment</string>
 </resources>

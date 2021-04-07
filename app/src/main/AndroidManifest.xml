@@ -12,16 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MobileApplication"
         android:usesCleartextTraffic="true">
-        <activity android:name=".assignment.ShowAssignmentActivity"></activity>
-        <activity
-            android:name=".course.ShowCourseActivity"
-            android:parentActivityName=".course.CourseActivity" />
-        <activity
-            android:name=".course.CourseActivity"
-            android:parentActivityName=".MainActivity" />
+        <activity android:name=".assignment.ShowAssignmentActivity" />
+        <activity android:name=".course.ShowCourseActivity" />
         <activity
             android:name=".MainActivity"
-            android:label="@string/title_activity_secondary"
+            android:configChanges="orientation|screenSize"
+            android:label="Secondary Activity"
             android:theme="@style/Theme.MobileApplication" />
         <activity android:name=".security.LoginActivity">
             <intent-filter>
