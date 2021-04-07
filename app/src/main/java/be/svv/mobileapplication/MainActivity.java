@@ -4,53 +4,74 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
-import be.svv.mobileapplication.course.CourseActivity;
+import be.svv.mobileapplication.fragment.DataFragment;
+import be.svv.mobileapplication.fragment.FragmentListener;
+import be.svv.mobileapplication.fragment.home.HomeFragment;
 import be.svv.mobileapplication.security.LoginActivity;
 
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends AppCompatActivity implements FragmentListener
 {
 
-    Button signOut;
-    GoogleSignInClient mGoogleSignInClient;
+    private GoogleSignInClient mGoogleSignInClient;
+    private BottomNavigationView bottomNavigationView;
+
+    private DataFragment dataFragment;
+    private HomeFragment homeFragment;
 
     @Override
     protected void onCreate (Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_secondary);
+        setContentView(R.layout.activity_main);
+
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
-        signOut = findViewById(R.id.signOut);
-        signOut.setOnClickListener(v ->
+        if (savedInstanceState != null)
         {
-            switch (v.getId())
+            dataFragment = (DataFragment) getSupportFragmentManager().findFragmentByTag("DATA_FRAGMENT");
+            homeFragment = (HomeFragment) getSupportFragmentManager().findFragmentByTag("HOME_FRAGMENT");
+        }
+        else
+        {
+            dataFragment = new DataFragment();
+            homeFragment = new HomeFragment();
+        }
+
+        if (!dataFragment.isInLayout())
+        {
+            getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment, "HOME_FRAGMENT").commit();
+        }
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(item ->
+        {
+            switch (item.getItemId())
             {
-                case R.id.signOut:
-                    signOut();
+                case R.id.navigation_home:
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment, "HOME_FRAGMENT").addToBackStack(null).commit();
+                    break;
+                case R.id.navigation_course:
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container, dataFragment, "DATA_FRAGMENT").addToBackStack(null).commit();
                     break;
             }
+            return true;
         });
-        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
+
+        //GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
     }
 
-    public void goToCourses (View view)
-    {
-        startActivity(new Intent(this, CourseActivity.class));
-    }
-
-    private void signOut ()
+    @Override
+    public void onAction ()
     {
         mGoogleSignInClient.signOut().addOnCompleteListener(this, task ->
         {
