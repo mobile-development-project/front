@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import be.svv.entity.Course;
+import be.svv.globals.Helpers;
 import be.svv.mobileapplication.R;
 import be.svv.mobileapplication.course.ShowCourseActivity;
 import be.svv.service.Gson.GsonSingleton;
@@ -31,7 +32,6 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
         public CourseViewHolder (@NonNull View itemView)
         {
             super(itemView);
-            id = itemView.findViewById(R.id.course_id);
             assignments = itemView.findViewById(R.id.course_assignements);
             name = itemView.findViewById(R.id.course_name);
         }
@@ -57,9 +57,9 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
     public void onBindViewHolder (@NonNull CourseAdapter.CourseViewHolder holder, int position)
     {
         Course currentItem = courses.get(position);
-        holder.id.setText(currentItem.getId() + "");
+        int sizeAssignments = currentItem.getAssignments().size();
         holder.name.setText(currentItem.getName());
-        holder.assignments.setText(currentItem.getAssignments().size() + " devoir(s)");
+        holder.assignments.setText(sizeAssignments == 0 ? "Pas de devoir" : sizeAssignments + Helpers.toPlurar("devoir", sizeAssignments));
 
         holder.itemView.setOnClickListener(v ->
         {
