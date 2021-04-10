@@ -1,4 +1,4 @@
-package be.svv.mobileapplication;
+package be.svv.view;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,10 +12,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.widget.Toast;
 
-import be.svv.mobileapplication.fragment.DataFragment;
-import be.svv.mobileapplication.fragment.FragmentListener;
-import be.svv.mobileapplication.fragment.home.HomeFragment;
-import be.svv.mobileapplication.security.LoginActivity;
+import be.svv.mobileapplication.R;
+import be.svv.view.fragment.DataFragment;
+import be.svv.view.fragment.FragmentListener;
+import be.svv.view.fragment.home.HomeFragment;
+import be.svv.view.security.LoginActivity;
 
 public class MainActivity extends AppCompatActivity implements FragmentListener
 {
@@ -53,15 +54,20 @@ public class MainActivity extends AppCompatActivity implements FragmentListener
             getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment, "HOME_FRAGMENT").commit();
         }
 
-        bottomNavigationView.setOnNavigationItemSelectedListener(item ->
-        {
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
             switch (item.getItemId())
             {
                 case R.id.navigation_home:
-                    getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment, "HOME_FRAGMENT").addToBackStack(null).commit();
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.container, homeFragment, "HOME_FRAGMENT")
+                            .addToBackStack(null)
+                            .commit();
                     break;
                 case R.id.navigation_course:
-                    getSupportFragmentManager().beginTransaction().replace(R.id.container, dataFragment, "DATA_FRAGMENT").addToBackStack(null).commit();
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.container, dataFragment, "DATA_FRAGMENT")
+                            .addToBackStack(null)
+                            .commit();
                     break;
             }
             return true;
@@ -71,10 +77,23 @@ public class MainActivity extends AppCompatActivity implements FragmentListener
     }
 
     @Override
+    public void onBackPressed ()
+    {
+        if (bottomNavigationView.getSelectedItemId() == R.id.navigation_home)
+        {
+            super.onBackPressed();
+            finish();
+        }
+        else
+        {
+            bottomNavigationView.setSelectedItemId(R.id.navigation_home);
+        }
+    }
+
+    @Override
     public void onAction ()
     {
-        mGoogleSignInClient.signOut().addOnCompleteListener(this, task ->
-        {
+        mGoogleSignInClient.signOut().addOnCompleteListener(this, task -> {
             Toast.makeText(MainActivity.this, "Signed out successfully !", Toast.LENGTH_LONG).show();
             startActivity(new Intent(this, LoginActivity.class));
             finish();

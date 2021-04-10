@@ -1,4 +1,4 @@
-package be.svv.mobileapplication.fragment;
+package be.svv.view.fragment;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

@@ -1,4 +1,4 @@
-package be.svv.mobileapplication.security;
+package be.svv.view.security;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,7 +15,7 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 
 import be.svv.mobileapplication.R;
-import be.svv.mobileapplication.MainActivity;
+import be.svv.view.MainActivity;
 
 public class LoginActivity extends AppCompatActivity
 {

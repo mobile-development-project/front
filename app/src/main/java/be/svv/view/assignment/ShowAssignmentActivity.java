@@ -1,4 +1,4 @@
-package be.svv.mobileapplication.assignment;
+package be.svv.view.assignment;
 
 import androidx.appcompat.app.AppCompatActivity;
 

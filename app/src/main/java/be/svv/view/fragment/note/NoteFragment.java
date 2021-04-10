@@ -1,4 +1,4 @@
-package be.svv.mobileapplication.fragment.category;
+package be.svv.view.fragment.note;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,16 +10,16 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import be.svv.mobileapplication.R;
+import be.svv.viewmodel.AssignmentViewModel;
 
-public class CategoryFragment extends Fragment
+public class NoteFragment extends Fragment
 {
-    private CategoryViewModel categoryViewModel;
+    private AssignmentViewModel assignmentViewModel;
 
     public View onCreateView (@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        categoryViewModel = new ViewModelProvider(this).get(CategoryViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_category, container, false);
-
+        assignmentViewModel = new ViewModelProvider(this).get(AssignmentViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_assignment, container, false);
         return root;
     }
 }

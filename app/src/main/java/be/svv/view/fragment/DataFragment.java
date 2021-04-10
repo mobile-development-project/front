@@ -1,4 +1,4 @@
-package be.svv.mobileapplication.fragment;
+package be.svv.view.fragment;
 
 import android.os.Bundle;
 
@@ -14,16 +14,13 @@ import android.view.ViewGroup;
 import com.google.android.material.tabs.TabLayout;
 
 import be.svv.mobileapplication.R;
-import be.svv.mobileapplication.fragment.assignment.AssignmentFragment;
-import be.svv.mobileapplication.fragment.category.CategoryFragment;
-import be.svv.mobileapplication.fragment.course.CourseFragment;
+import be.svv.view.fragment.assignment.AssignmentFragment;
+import be.svv.view.fragment.category.CategoryFragment;
+import be.svv.view.fragment.course.CourseFragment;
+import be.svv.view.fragment.note.NoteFragment;
 
 public class DataFragment extends Fragment
 {
-
-    private CourseFragment courseFragment;
-    private AssignmentFragment assignmentFragment;
-    private CategoryFragment categoryFragment;
 
     private ViewPager viewPager;
     private TabLayout tabLayout;
@@ -31,8 +28,8 @@ public class DataFragment extends Fragment
     @Override
     public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_data, container, false);
+        View view = inflater.inflate(R.layout.fragment_data, container, false);
+        return view;
     }
 
     @Override
@@ -42,20 +39,21 @@ public class DataFragment extends Fragment
 
         viewPager = view.findViewById(R.id.view_pager);
         tabLayout = view.findViewById(R.id.tab_layout);
-        courseFragment = new CourseFragment();
-        assignmentFragment = new AssignmentFragment();
-        categoryFragment = new CategoryFragment();
 
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager(), 0);
-        viewPagerAdapter.addFragment(courseFragment, "Cours");
-        viewPagerAdapter.addFragment(assignmentFragment, "Devoirs");
-        viewPagerAdapter.addFragment(categoryFragment, "Catégories");
+        viewPagerAdapter.addFragment(new CourseFragment(), "Cours");
+        viewPagerAdapter.addFragment(new AssignmentFragment(), "Devoirs");
+        viewPagerAdapter.addFragment(new CategoryFragment(), "Catégories");
+        viewPagerAdapter.addFragment(new NoteFragment(), "Notes");
 
         viewPager.setAdapter(viewPagerAdapter);
+        viewPager.setSaveEnabled(false);
         tabLayout.setupWithViewPager(viewPager);
-        
+
         tabLayout.getTabAt(0).setIcon(R.drawable.ic_baseline_class_24);
         tabLayout.getTabAt(1).setIcon(R.drawable.ic_baseline_home_work_24);
         tabLayout.getTabAt(2).setIcon(R.drawable.ic_baseline_category_24);
+        tabLayout.getTabAt(3).setIcon(R.drawable.ic_baseline_sticky_note_2_24);
     }
+
 }

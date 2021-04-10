@@ -1,4 +1,4 @@
-package be.svv.mobileapplication.fragment.home;
+package be.svv.view.fragment.home;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

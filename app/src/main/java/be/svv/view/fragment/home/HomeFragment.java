@@ -1,4 +1,4 @@
-package be.svv.mobileapplication.fragment.home;
+package be.svv.view.fragment.home;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import be.svv.mobileapplication.R;
-import be.svv.mobileapplication.fragment.FragmentListener;
+import be.svv.view.fragment.FragmentListener;
 
 public class HomeFragment extends Fragment
 {

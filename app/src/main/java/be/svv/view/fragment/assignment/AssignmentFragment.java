@@ -1,4 +1,4 @@
-package be.svv.mobileapplication.fragment.assignment;
+package be.svv.view.fragment.assignment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import be.svv.mobileapplication.R;
+import be.svv.viewmodel.AssignmentViewModel;
 
 public class AssignmentFragment extends Fragment
 {
@@ -19,7 +20,6 @@ public class AssignmentFragment extends Fragment
     {
         assignmentViewModel = new ViewModelProvider(this).get(AssignmentViewModel.class);
         View root = inflater.inflate(R.layout.fragment_assignment, container, false);
-
         return root;
     }
 }
