@@ -1,9 +1,9 @@
-package be.svv.entity;
+package be.svv.model;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class User extends Entity
+public class User extends Model
 {
 
     private int id;

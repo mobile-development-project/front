@@ -1,6 +1,6 @@
-package be.svv.entity;
+package be.svv.model;
 
-public class Category extends Entity
+public class Category extends Model
 {
 
     private int id;

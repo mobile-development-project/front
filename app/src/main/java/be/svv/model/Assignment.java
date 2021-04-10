@@ -1,8 +1,8 @@
-package be.svv.entity;
+package be.svv.model;
 
 import java.util.Date;
 
-public class Assignment extends Entity
+public class Assignment extends Model
 {
 
     private int id;

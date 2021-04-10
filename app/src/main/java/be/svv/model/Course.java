@@ -1,8 +1,8 @@
-package be.svv.entity;
+package be.svv.model;
 
 import java.util.ArrayList;
 
-public class Course extends Entity
+public class Course extends Model
 {
 
     private int id;
@@ -10,6 +10,11 @@ public class Course extends Entity
     private String name;
 
     private ArrayList<Assignment> assignments;
+
+    public Course (String name)
+    {
+        this.name = name;
+    }
 
     public int getId ()
     {
