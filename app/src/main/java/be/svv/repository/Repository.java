@@ -1,135 +1,67 @@
 package be.svv.repository;
 
-import android.content.Context;
 import android.util.Log;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.NetworkResponse;
-import com.android.volley.Request;
-import com.android.volley.toolbox.StringRequest;
+import java.util.List;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import be.svv.model.Course;
+import be.svv.model.Model;
+import be.svv.model.request.CourseRequest;
+import be.svv.model.request.ModelRequest;
+import be.svv.service.network.RetrofitService;
+import be.svv.service.network.endpoint.ApiInterface;
+import be.svv.viewmodel.ViewModelCallback;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import be.svv.entity.Entity;
-import be.svv.service.Gson.GsonSingleton;
-import be.svv.service.Volley.VolleyCallback;
-import be.svv.service.Volley.VolleySingleton;
-
-public class Repository
+public class Repository<T extends Model>
 {
 
-    protected final String URL;
-    protected final Context context;
+    private ApiInterface api;
+    private Class model;
 
-    public Repository (String URL, Context context)
+    protected Repository (Class<T> model)
     {
-        this.URL = URL;
-        this.context = context;
+        api = RetrofitService.getClient().create(ApiInterface.class);
+        this.model = model;
     }
 
-    /**
-     * Returns one item
-     *
-     * @param id
-     * @param callback
-     */
-    public void findById (int id, final VolleyCallback callback)
+    public void getAll (final ViewModelCallback callback)
     {
-        getStringRequest(URL + "/" + id, callback);
-    }
-
-    /**
-     * Returns a collection of items
-     *
-     * @param callback
-     */
-    public void findAll (final VolleyCallback callback)
-    {
-        getStringRequest(URL, callback);
-    }
-
-    public void add (int id, Object object, final VolleyCallback callback)
-    {
-        postStringRequest(Request.Method.POST, id, URL, object, callback);
-    }
-
-    public void update (int id, Object object, final VolleyCallback callback)
-    {
-        postStringRequest(Request.Method.PUT, id, URL, object, callback);
-    }
-
-    private void postStringRequest (int method, int id, String url, Object object, final VolleyCallback callback)
-    {
-        StringRequest stringRequest = new StringRequest(method, url + "/" + id, response ->
-        {
-            callback.onSuccess(response);
-        }, error ->
-        {
-            NetworkResponse response = error.networkResponse;
-            try
-            {
-                String responseData = new String(response.data);
-                Log.d("ERROR", responseData);
-                JSONObject responseObject = new JSONObject(responseData);
-                //Log.e("ERROR", responseObject.optString("message"));
-            }
-            catch (JSONException e)
-            {
-                e.printStackTrace();
-            }
-        })
+        api.getAll(model).enqueue(new Callback<List<T>>()
         {
             @Override
-            public byte[] getBody ()
+            public void onResponse (Call<List<T>> call, Response<List<T>> response)
             {
-                return GsonSingleton.getInstance().toJson(object).getBytes();
+                callback.onResponse(response);
             }
 
             @Override
-            public Map<String, String> getHeaders ()
+            public void onFailure (Call<List<T>> call, Throwable t)
             {
-                Map<String, String> params = new HashMap<>();
-                params.put("Content-Type", "application/json");
-                return params;
-            }
-        };
 
-        VolleySingleton.getInstance(context).addToRequestQueue(stringRequest);
-    }
-
-    /**
-     * Fetches the data and call the callback passed in argument
-     *
-     * @param url
-     * @param callback
-     */
-    private void getStringRequest (String url, final VolleyCallback callback)
-    {
-
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, response ->
-        {
-            callback.onSuccess(response);
-        }, error ->
-        {
-            NetworkResponse response = error.networkResponse;
-            try
-            {
-                String responseData = new String(response.data);
-                JSONObject responseObject = new JSONObject(responseData);
-                Log.d("ERROR", responseData);
-                //Log.e("ERROR", responseObject.optString("message"));
-            }
-            catch (JSONException e)
-            {
-                e.printStackTrace();
             }
         });
-
-        VolleySingleton.getInstance(context).addToRequestQueue(stringRequest);
     }
+
+    public <T extends ModelRequest> void add (T modelRequest, final ViewModelCallback callback)
+    {
+        api.add(modelRequest, model).enqueue(new Callback<T>()
+        {
+            @Override
+            public void onResponse (Call<T> call, Response<T> response)
+            {
+                callback.onResponse(response);
+            }
+
+            @Override
+            public void onFailure (Call<T> call, Throwable t)
+            {
+
+            }
+        });
+    }
+
 
 }
