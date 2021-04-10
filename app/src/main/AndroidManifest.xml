@@ -12,14 +12,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MobileApplication"
         android:usesCleartextTraffic="true">
-        <activity android:name=".assignment.ShowAssignmentActivity" />
-        <activity android:name=".course.ShowCourseActivity" />
         <activity
-            android:name=".MainActivity"
+            android:name="be.svv.view.fragment.course.AddCourseActivity"
+            android:launchMode="singleTop"
+            android:parentActivityName="be.svv.view.MainActivity" />
+        <activity android:name="be.svv.view.assignment.ShowAssignmentActivity" />
+        <!--        <activity android:name="be.svv.view.course.ShowCourseActivity" />-->
+        <activity
+            android:name="be.svv.view.MainActivity"
             android:configChanges="orientation|screenSize"
             android:label="Secondary Activity"
             android:theme="@style/Theme.MobileApplication" />
-        <activity android:name=".security.LoginActivity">
+        <activity android:name="be.svv.view.security.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
