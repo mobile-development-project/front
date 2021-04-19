@@ -3,7 +3,6 @@ package be.svv.view.fragment.course;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,10 +25,7 @@ import be.svv.model.request.CourseRequest;
 import be.svv.view.adapter.CourseAdapter;
 import be.svv.model.Course;
 import be.svv.mobileapplication.R;
-//import be.svv.repository.Repository;
-//import be.svv.repository.RepositoryFactory;
 import be.svv.viewmodel.CourseViewModel;
-//import be.svv.service.Gson.GsonSingleton;
 
 public class CourseFragment extends Fragment
 {
@@ -65,7 +61,7 @@ public class CourseFragment extends Fragment
         recyclerView = view.findViewById(R.id.recycler_view);
         adapter = new CourseAdapter();
         courseViewModel = new ViewModelProvider(this).get(CourseViewModel.class);
-        courseViewModel.getAllCourses().observe(getViewLifecycleOwner(), new Observer<List<Course>>()
+        courseViewModel.getAll().observe(getViewLifecycleOwner(), new Observer<List<Course>>()
         {
             @Override
             public void onChanged (List<Course> courses)
@@ -85,13 +81,9 @@ public class CourseFragment extends Fragment
         if (requestCode == ADD_COURSE_REQUEST && resultCode == Activity.RESULT_OK)
         {
             String name = data.getStringExtra("NAME");
-            courseViewModel.addCourse(new CourseRequest(name));
+            courseViewModel.add(new CourseRequest(name));
             Toast.makeText(getContext(), "Cours crée", Toast.LENGTH_SHORT).show();
         }
-        //        else
-        //        {
-        //            Toast.makeText(getContext(), "Cours non crée", Toast.LENGTH_SHORT).show();
-        //        }
     }
 
 }

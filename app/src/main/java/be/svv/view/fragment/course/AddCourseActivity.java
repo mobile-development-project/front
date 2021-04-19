@@ -24,13 +24,13 @@ public class AddCourseActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_course);
 
-        editTextName = findViewById(R.id.edit_text_name);
+        editTextName = findViewById(R.id.edit_text_course_name);
 
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_baseline_close_24);
         setTitle("Ajouter un cours");
     }
 
-    private void saveNote ()
+    private void saveCourse ()
     {
         String name = editTextName.getText().toString();
 
@@ -49,7 +49,7 @@ public class AddCourseActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu (Menu menu)
     {
         MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.add_course_menu, menu);
+        menuInflater.inflate(R.menu.add_menu, menu);
         return true;
     }
 
@@ -59,8 +59,8 @@ public class AddCourseActivity extends AppCompatActivity
     {
         switch (item.getItemId())
         {
-            case R.id.save_course:
-                saveNote();
+            case R.id.save:
+                saveCourse();
                 return true;
             case android.R.id.home:
                 finish();
