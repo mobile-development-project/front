@@ -2,39 +2,39 @@ package be.svv.repository;
 
 import java.util.List;
 
-import be.svv.model.Assignment;
-import be.svv.model.request.AssignmentRequest;
+import be.svv.model.Category;
+import be.svv.model.request.CategoryRequest;
 import be.svv.model.request.ModelRequest;
 import be.svv.service.network.RetrofitService;
-import be.svv.service.network.endpoint.AssignmentApi;
+import be.svv.service.network.endpoint.CategoryApi;
 import be.svv.viewmodel.ViewModelCallback;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AssignmentRepository implements RepositoryInterface<Assignment>
+public class CategoryRepository implements RepositoryInterface<Category>
 {
 
-    private AssignmentApi api;
+    private CategoryApi api;
 
-    public AssignmentRepository ()
+    public CategoryRepository ()
     {
-        api = RetrofitService.getClient().create(AssignmentApi.class);
+        api = RetrofitService.getClient().create(CategoryApi.class);
     }
 
     @Override
     public void getAll (ViewModelCallback callback)
     {
-        api.getAll().enqueue(new Callback<List<Assignment>>()
+        api.getAll().enqueue(new Callback<List<Category>>()
         {
             @Override
-            public void onResponse (Call<List<Assignment>> call, Response<List<Assignment>> response)
+            public void onResponse (Call<List<Category>> call, Response<List<Category>> response)
             {
                 callback.onResponse(response);
             }
 
             @Override
-            public void onFailure (Call<List<Assignment>> call, Throwable t)
+            public void onFailure (Call<List<Category>> call, Throwable t)
             {
 
             }
@@ -44,16 +44,16 @@ public class AssignmentRepository implements RepositoryInterface<Assignment>
     @Override
     public <T extends ModelRequest> void add (T request, ViewModelCallback callback)
     {
-        api.add((AssignmentRequest) request).enqueue(new Callback<Assignment>()
+        api.add((CategoryRequest) request).enqueue(new Callback<Category>()
         {
             @Override
-            public void onResponse (Call<Assignment> call, Response<Assignment> response)
+            public void onResponse (Call<Category> call, Response<Category> response)
             {
                 callback.onResponse(response);
             }
 
             @Override
-            public void onFailure (Call<Assignment> call, Throwable t)
+            public void onFailure (Call<Category> call, Throwable t)
             {
 
             }
@@ -63,16 +63,16 @@ public class AssignmentRepository implements RepositoryInterface<Assignment>
     @Override
     public <T extends ModelRequest> void update (T request, int id, ViewModelCallback callback)
     {
-        api.update(id, (AssignmentRequest) request).enqueue(new Callback<Assignment>()
+        api.update(id, (CategoryRequest) request).enqueue(new Callback<Category>()
         {
             @Override
-            public void onResponse (Call<Assignment> call, Response<Assignment> response)
+            public void onResponse (Call<Category> call, Response<Category> response)
             {
                 callback.onResponse(response);
             }
 
             @Override
-            public void onFailure (Call<Assignment> call, Throwable t)
+            public void onFailure (Call<Category> call, Throwable t)
             {
             }
         });

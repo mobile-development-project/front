@@ -1,10 +1,12 @@
 package be.svv.repository;
 
+import android.util.Log;
+
 import java.util.List;
 
 import be.svv.model.Course;
-import be.svv.model.Model;
 import be.svv.model.request.CourseRequest;
+import be.svv.model.request.ModelRequest;
 import be.svv.service.network.RetrofitService;
 import be.svv.service.network.endpoint.CourseApi;
 import be.svv.viewmodel.ViewModelCallback;
@@ -12,50 +14,58 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CourseRepository extends Repository<Course>
+public class CourseRepository implements RepositoryInterface<Course>
 {
+
+    private CourseApi api;
+
     public CourseRepository ()
     {
-        super(Course.class);
+        api = RetrofitService.getClient().create(CourseApi.class);
     }
 
-    //    public void getAll (final ViewModelCallback callback)
-    //    {
-    //        courseApi.getAll().enqueue(new Callback<List<Course>>()
-    //        {
-    //            @Override
-    //            public void onResponse (Call<List<Course>> call, Response<List<Course>> response)
-    //            {
-    //                if (response.isSuccessful() && response.body() != null)
-    //                {
-    //                    callback.onResponse(response);
-    //                }
-    //            }
-    //
-    //            @Override
-    //            public void onFailure (Call<List<Course>> call, Throwable t)
-    //            {
-    //            }
-    //        });
-    //    }
+    @Override
+    public void getAll (ViewModelCallback callback)
+    {
+        api.getAll().enqueue(new Callback<List<Course>>()
+        {
+            @Override
+            public void onResponse (Call<List<Course>> call, Response<List<Course>> response)
+            {
+                callback.onResponse(response);
+            }
 
-    //    public void add (CourseRequest courseRequest, final ViewModelCallback callback)
-    //    {
-    //        courseApi.add(courseRequest).enqueue(new Callback<Course>()
-    //        {
-    //            @Override
-    //            public void onResponse (Call<Course> call, Response<Course> response)
-    //            {
-    //                callback.onResponse(response);
-    //            }
-    //
-    //            @Override
-    //            public void onFailure (Call<Course> call, Throwable t)
-    //            {
-    //
-    //            }
-    //        });
-    //    }
+            @Override
+            public void onFailure (Call<List<Course>> call, Throwable t)
+            {
+                Log.d("FAIL", t.getLocalizedMessage());
+            }
+        });
+    }
 
+    @Override
+    public <T extends ModelRequest> void add (T request, ViewModelCallback callback)
+    {
+        api.add((CourseRequest) request).enqueue(new Callback<Course>()
+        {
+            @Override
+            public void onResponse (Call<Course> call, Response<Course> response)
+            {
+                callback.onResponse(response);
+            }
+
+            @Override
+            public void onFailure (Call<Course> call, Throwable t)
+            {
+                Log.d("FAIL", t.getLocalizedMessage());
+            }
+        });
+    }
+
+    @Override
+    public <T extends ModelRequest> void update (T request, int id, ViewModelCallback callback)
+    {
+
+    }
 
 }
