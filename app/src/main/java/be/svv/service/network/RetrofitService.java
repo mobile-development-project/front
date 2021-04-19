@@ -9,14 +9,14 @@ public class RetrofitService
     private static Retrofit retrofit;
     private static String BASE_URL = "http://192.168.0.134:8000/api/";
 
-    public static Retrofit getClient ()
+    public static synchronized Retrofit getClient ()
     {
-        if (retrofit == null)
+        if (RetrofitService.retrofit == null)
         {
-            retrofit = new Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();
+            RetrofitService.retrofit = new Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();
         }
 
-        return retrofit;
+        return RetrofitService.retrofit;
     }
 
 }
