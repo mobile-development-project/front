@@ -7,10 +7,13 @@ public class AssignmentRequest extends ModelRequest
 
     private String course;
 
-    public AssignmentRequest (String name, String course)
+    private Boolean allowNotifications;
+
+    public AssignmentRequest (String name, String course, Boolean allowNotifications)
     {
         this.name = name;
         this.course = course;
+        this.allowNotifications = allowNotifications;
     }
 
     public String getCourse ()
@@ -21,6 +24,11 @@ public class AssignmentRequest extends ModelRequest
     public String getName ()
     {
         return name;
+    }
+
+    public Boolean getAllowNotifications ()
+    {
+        return allowNotifications;
     }
 
     @Override
