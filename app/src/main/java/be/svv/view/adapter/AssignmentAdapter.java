@@ -1,7 +1,6 @@
 package be.svv.view.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,19 +9,24 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import be.svv.globals.Url;
 import be.svv.model.Assignment;
 import be.svv.mobileapplication.R;
+import be.svv.model.request.AssignmentRequest;
+import be.svv.viewmodel.AssignmentViewModel;
 
 public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.AssignmentViewHolder>
 {
 
     private List<Assignment> assignments;
-
+    private Context context;
 
     public AssignmentAdapter ()
     {
@@ -39,7 +43,7 @@ public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.As
     public AssignmentAdapter.AssignmentViewHolder onCreateViewHolder (@NonNull ViewGroup parent, int viewType)
     {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_assignment_adapter, parent, false);
-
+        context = view.getContext();
         return new AssignmentViewHolder(view);
     }
 
@@ -51,24 +55,17 @@ public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.As
         holder.finisAt.setText(currentItem.getFinishAt().toLocaleString());
         holder.allowNotifications.setChecked(currentItem.isAllowNotifications());
 
-        //        holder.allowNotifications.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
-        //        {
-        //            @Override
-        //            public void onCheckedChanged (CompoundButton buttonView, boolean isChecked)
-        //            {
-        //                currentItem.setAllowNotifications(!currentItem.isAllowNotifications());
-        //                RepositoryFactory repositoryFactory = new RepositoryFactory(context);
-        //                Repository assignmentRepository = repositoryFactory.getRepository(Assignment.class);
-        //                assignmentRepository.update(currentItem.getId(), currentItem, new VolleyCallback()
-        //                {
-        //                    @Override
-        //                    public void onSuccess (String result)
-        //                    {
-        //                        Log.d("RESPONSE", result);
-        //                    }
-        //                });
-        //            }
-        //        });
+        holder.allowNotifications.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+        {
+            @Override
+            public void onCheckedChanged (CompoundButton buttonView, boolean isChecked)
+            {
+                currentItem.setAllowNotifications(!currentItem.isAllowNotifications());
+                AssignmentViewModel assignmentViewModel = new ViewModelProvider((ViewModelStoreOwner) context).get(AssignmentViewModel.class);
+                assignmentViewModel.update(new AssignmentRequest(currentItem.getName(), Url.COURSES + currentItem.getCourse()
+                        .getId(), currentItem.isAllowNotifications()), currentItem.getId());
+            }
+        });
     }
 
 
