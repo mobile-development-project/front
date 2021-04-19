@@ -34,6 +34,6 @@ public class Course extends Model
     @Override
     public String toString ()
     {
-        return "Course{" + "id=" + id + ", name='" + name + '\'' + ", assignments=" + assignments + '}';
+        return name;
     }
 }
