@@ -1,8 +1,13 @@
 package be.svv.viewmodel;
 
-import androidx.lifecycle.ViewModel;
+import be.svv.model.Category;
+import be.svv.repository.RepositoryFactory;
 
-public class CategoryViewModel extends ViewModel
+public class CategoryViewModel extends EntityViewModel<Category>
 {
 
+    public CategoryViewModel ()
+    {
+        super(RepositoryFactory.getRepository(Category.class));
+    }
 }
