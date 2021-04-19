@@ -12,13 +12,19 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
+import retrofit2.http.Path;
 
 public interface AssignmentApi
 {
 
-    @GET("courses")
+    @GET("assignments")
     Call<List<Assignment>> getAll ();
 
     @POST("assignments")
-    Call<Assignment> add (@Body ModelRequest request);
+    Call<Assignment> add (@Body AssignmentRequest request);
+
+    @PUT("assignments/{id}")
+    Call<Assignment> update (@Path("id") int id, @Body AssignmentRequest request);
+
 }
