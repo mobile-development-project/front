@@ -1,4 +1,4 @@
-package be.svv.service.Gson;
+package be.svv.service.gson;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
