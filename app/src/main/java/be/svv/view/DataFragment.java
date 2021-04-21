@@ -1,4 +1,4 @@
-package be.svv.view.fragment;
+package be.svv.view;
 
 import android.os.Bundle;
 
@@ -14,16 +14,17 @@ import android.view.ViewGroup;
 import com.google.android.material.tabs.TabLayout;
 
 import be.svv.mobileapplication.R;
-import be.svv.view.fragment.assignment.AssignmentFragment;
-import be.svv.view.fragment.category.CategoryFragment;
-import be.svv.view.fragment.course.CourseFragment;
-import be.svv.view.fragment.note.NoteFragment;
+import be.svv.view.assignment.AssignmentFragment;
+import be.svv.view.category.CategoryFragment;
+import be.svv.view.course.CourseFragment;
+import be.svv.view.note.NoteFragment;
 
 public class DataFragment extends Fragment
 {
 
     private ViewPager viewPager;
     private TabLayout tabLayout;
+    private ViewPagerAdapter viewPagerAdapter;
 
     @Override
     public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -40,7 +41,7 @@ public class DataFragment extends Fragment
         viewPager = view.findViewById(R.id.view_pager);
         tabLayout = view.findViewById(R.id.tab_layout);
 
-        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager(), 0);
+        viewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager(), 0);
         viewPagerAdapter.addFragment(new CourseFragment(), "Cours");
         viewPagerAdapter.addFragment(new AssignmentFragment(), "Devoirs");
         viewPagerAdapter.addFragment(new CategoryFragment(), "Catégories");
@@ -55,5 +56,6 @@ public class DataFragment extends Fragment
         tabLayout.getTabAt(2).setIcon(R.drawable.ic_baseline_category_24);
         tabLayout.getTabAt(3).setIcon(R.drawable.ic_baseline_sticky_note_2_24);
     }
+
 
 }

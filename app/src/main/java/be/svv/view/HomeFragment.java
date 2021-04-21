@@ -1,4 +1,4 @@
-package be.svv.view.fragment.home;
+package be.svv.view;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -9,21 +9,17 @@ import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 
 import be.svv.mobileapplication.R;
-import be.svv.view.fragment.FragmentListener;
 
 public class HomeFragment extends Fragment
 {
 
     private FragmentListener listener;
-    private HomeViewModel homeViewModel;
     private Button signOut;
 
     public View onCreateView (@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
         signOut = root.findViewById(R.id.signOut);

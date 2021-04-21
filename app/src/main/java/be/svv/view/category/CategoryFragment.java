@@ -1,4 +1,4 @@
-package be.svv.view.fragment.course;
+package be.svv.view.category;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -21,32 +21,33 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
-import be.svv.model.request.CourseRequest;
-import be.svv.view.adapter.CourseAdapter;
-import be.svv.model.Course;
 import be.svv.mobileapplication.R;
-import be.svv.viewmodel.CourseViewModel;
+import be.svv.model.Category;
+import be.svv.model.request.CategoryRequest;
+import be.svv.view.adapter.CategoryAdapter;
+import be.svv.viewmodel.CategoryViewModel;
 
-public class CourseFragment extends Fragment
+public class CategoryFragment extends Fragment
 {
-    public static final int ADD_COURSE_REQUEST = 1;
+
+    public static final int ADD_CATEGORY_REQUEST = 1;
     private RecyclerView recyclerView;
-    private CourseAdapter adapter;
-    private CourseViewModel courseViewModel;
+    private CategoryAdapter adapter;
+    private CategoryViewModel categoryViewModel;
     private FloatingActionButton btnPlus;
     private ProgressBar progressBar;
 
     public View onCreateView (@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        View root = inflater.inflate(R.layout.fragment_course, container, false);
-        progressBar = root.findViewById(R.id.progress_bar);
-        btnPlus = root.findViewById(R.id.btn_add_course);
+        View root = inflater.inflate(R.layout.fragment_category, container, false);
+        progressBar = root.findViewById(R.id.progress_bar_category);
+        btnPlus = root.findViewById(R.id.btn_add_category);
         btnPlus.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick (View v)
             {
-                startActivityForResult(new Intent(getContext(), AddCourseActivity.class), ADD_COURSE_REQUEST);
+                startActivityForResult(new Intent(getContext(), AddCategoryActivity.class), ADD_CATEGORY_REQUEST);
                 //getActivity().overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
             }
         });
@@ -58,15 +59,15 @@ public class CourseFragment extends Fragment
     {
         super.onViewCreated(view, savedInstanceState);
 
-        recyclerView = view.findViewById(R.id.recycler_view);
-        adapter = new CourseAdapter();
-        courseViewModel = new ViewModelProvider(this).get(CourseViewModel.class);
-        courseViewModel.getAll().observe(getViewLifecycleOwner(), new Observer<List<Course>>()
+        recyclerView = view.findViewById(R.id.recycler_view_category);
+        adapter = new CategoryAdapter();
+        categoryViewModel = new ViewModelProvider(this).get(CategoryViewModel.class);
+        categoryViewModel.getAll().observe(getViewLifecycleOwner(), new Observer<List<Category>>()
         {
             @Override
-            public void onChanged (List<Course> courses)
+            public void onChanged (List<Category> categories)
             {
-                adapter.setCourses(courses);
+                adapter.setCategories(categories);
                 recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                 recyclerView.setAdapter(adapter);
                 progressBar.setVisibility(ProgressBar.INVISIBLE);
@@ -78,12 +79,11 @@ public class CourseFragment extends Fragment
     public void onActivityResult (int requestCode, int resultCode, @Nullable Intent data)
     {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == ADD_COURSE_REQUEST && resultCode == Activity.RESULT_OK)
+        if (requestCode == ADD_CATEGORY_REQUEST && resultCode == Activity.RESULT_OK)
         {
             String name = data.getStringExtra("NAME");
-            courseViewModel.add(new CourseRequest(name));
-            Toast.makeText(getContext(), "Cours crée", Toast.LENGTH_SHORT).show();
+            categoryViewModel.add(new CategoryRequest(name));
+            Toast.makeText(getContext(), "Catégorie créee", Toast.LENGTH_SHORT).show();
         }
     }
-
 }

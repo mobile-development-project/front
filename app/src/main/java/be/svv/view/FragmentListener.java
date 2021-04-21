@@ -1,4 +1,4 @@
-package be.svv.view.fragment;
+package be.svv.view;
 
 public interface FragmentListener
 {

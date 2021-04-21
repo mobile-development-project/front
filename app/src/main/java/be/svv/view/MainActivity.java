@@ -13,9 +13,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.widget.Toast;
 
 import be.svv.mobileapplication.R;
-import be.svv.view.fragment.DataFragment;
-import be.svv.view.fragment.FragmentListener;
-import be.svv.view.fragment.home.HomeFragment;
 import be.svv.view.security.LoginActivity;
 
 public class MainActivity extends AppCompatActivity implements FragmentListener

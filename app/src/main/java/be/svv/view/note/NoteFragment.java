@@ -1,4 +1,4 @@
-package be.svv.view.fragment.note;
+package be.svv.view.note;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
