@@ -78,4 +78,11 @@ public class AssignmentRepository implements RepositoryInterface<Assignment>
         });
     }
 
+    @Override
+    public void delete (int id, ViewModelCallback callback)
+    {
+        api.delete(id);
+    }
+
+
 }

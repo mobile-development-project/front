@@ -33,4 +33,12 @@ public interface RepositoryInterface<T extends Model>
      */
     <T extends ModelRequest> void update (T request, int id, final ViewModelCallback callback);
 
+
+    /**
+     * Delete an element
+     *
+     * @param callback
+     */
+    void delete (int id, final ViewModelCallback callback);
+
 }

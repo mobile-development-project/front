@@ -1,5 +1,7 @@
 package be.svv.repository;
 
+import android.util.Log;
+
 import java.util.List;
 
 import be.svv.model.Category;
@@ -76,6 +78,12 @@ public class CategoryRepository implements RepositoryInterface<Category>
             {
             }
         });
+    }
+
+    @Override
+    public void delete (int id, ViewModelCallback callback)
+    {
+        api.delete(id);
     }
 
 }
