@@ -13,14 +13,22 @@
         android:theme="@style/Theme.MobileApplication"
         android:usesCleartextTraffic="true">
         <activity
-            android:name="be.svv.view.fragment.assignment.AddAssignmentActivity"
-            android:launchMode="singleTop"
-            android:parentActivityName="be.svv.view.MainActivity"/>
-        <activity
-            android:name="be.svv.view.fragment.course.AddCourseActivity"
+            android:name="be.svv.view.assignment.AddAssignmentActivity"
             android:launchMode="singleTop"
             android:parentActivityName="be.svv.view.MainActivity" />
-        <activity android:name="be.svv.view.assignment.ShowAssignmentActivity" /> <!-- <activity android:name="be.svv.view.course.ShowCourseActivity" /> -->
+        <activity
+            android:name="be.svv.view.course.AddEditCourseActivity"
+            android:launchMode="singleTop"
+            android:parentActivityName="be.svv.view.MainActivity" />
+        <activity
+            android:name="be.svv.view.category.AddCategoryActivity"
+            android:launchMode="singleTop"
+            android:parentActivityName="be.svv.view.MainActivity" />
+        <activity android:name="be.svv.view.assignment.ShowAssignmentActivity" />
+        <activity
+            android:name="be.svv.view.course.ShowCourseActivity"
+            android:launchMode="singleTop"
+            android:parentActivityName="be.svv.view.MainActivity" />
         <activity
             android:name="be.svv.view.MainActivity"
             android:configChanges="orientation|screenSize"
