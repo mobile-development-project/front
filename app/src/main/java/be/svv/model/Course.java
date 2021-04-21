@@ -11,11 +11,6 @@ public class Course extends Model
 
     private ArrayList<Assignment> assignments;
 
-    public Course (String name)
-    {
-        this.name = name;
-    }
-
     public int getId ()
     {
         return id;
