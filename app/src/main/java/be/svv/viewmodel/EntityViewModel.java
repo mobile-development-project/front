@@ -20,14 +20,7 @@ public class EntityViewModel<T extends Model> extends ViewModel
     {
         this.repositoryInterface = repository;
         datas = new MutableLiveData<>();
-        this.repositoryInterface.getAll(new ViewModelCallback<T>()
-        {
-            @Override
-            public void onResponse (Response<List<T>> response)
-            {
-                datas.setValue(response.body());
-            }
-        });
+        populateList();
     }
 
     private void populateList ()
@@ -62,6 +55,18 @@ public class EntityViewModel<T extends Model> extends ViewModel
     public <T extends ModelRequest> void update (T request, int id)
     {
         repositoryInterface.update(request, id, new ViewModelCallback()
+        {
+            @Override
+            public void onResponse (Response response)
+            {
+                populateList();
+            }
+        });
+    }
+
+    public void delete (int id)
+    {
+        repositoryInterface.delete(id, new ViewModelCallback()
         {
             @Override
             public void onResponse (Response response)
