@@ -8,15 +8,10 @@
     tools:context="be.svv.view.course.AddEditCourseActivity">
 
     <EditText
-        android:id="@+id/edit_text_assignment_name"
+        android:id="@+id/edit_text_category_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Intitulé du devoir"
+        android:hint="Nom de la catégorie"
         android:inputType="text" />
-
-    <Spinner
-        android:id="@+id/spinner_assignemt_course"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
 
 </LinearLayout>
