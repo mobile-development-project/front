@@ -8,6 +8,7 @@ import be.svv.model.request.AssignmentRequest;
 import be.svv.model.request.CategoryRequest;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -24,5 +25,8 @@ public interface CategoryApi
 
     @PUT("categories/{id}")
     Call<Category> update (@Path("id") int id, @Body CategoryRequest request);
+
+    @DELETE("categories/{id}")
+    void delete (@Path("id") int id);
 
 }

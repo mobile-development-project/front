@@ -10,6 +10,7 @@ import be.svv.model.request.CourseRequest;
 import be.svv.model.request.ModelRequest;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -26,5 +27,8 @@ public interface AssignmentApi
 
     @PUT("assignments/{id}")
     Call<Assignment> update (@Path("id") int id, @Body AssignmentRequest request);
+
+    @DELETE("assignments/{id}")
+    void delete (@Path("id") int id);
 
 }
