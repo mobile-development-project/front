@@ -24,13 +24,18 @@ import java.util.List;
 import be.svv.mobileapplication.R;
 import be.svv.model.Category;
 import be.svv.model.request.CategoryRequest;
+import be.svv.model.request.CourseRequest;
+import be.svv.service.gson.GsonSingleton;
 import be.svv.view.adapter.CategoryAdapter;
+import be.svv.view.course.AddEditCourseActivity;
 import be.svv.viewmodel.CategoryViewModel;
 
 public class CategoryFragment extends Fragment
 {
 
     public static final int ADD_CATEGORY_REQUEST = 1;
+    public static final int EDIT_CATEGORY_REQUEST = 2;
+
     private RecyclerView recyclerView;
     private CategoryAdapter adapter;
     private CategoryViewModel categoryViewModel;
@@ -73,6 +78,18 @@ public class CategoryFragment extends Fragment
                 progressBar.setVisibility(ProgressBar.INVISIBLE);
             }
         });
+
+        adapter.setOnItemClickListener(new CategoryAdapter.OnItemClickListener()
+        {
+            @Override
+            public void onItemClick (Category category)
+            {
+                Intent intent = new Intent(getContext(), AddCategoryActivity.class);
+                intent.putExtra(AddCategoryActivity.EXTRA_CATEGORY, GsonSingleton.getInstance().toJson(category));
+                intent.putExtra(AddCategoryActivity.EXTRA_ID, category.getId());
+                startActivityForResult(intent, EDIT_CATEGORY_REQUEST);
+            }
+        });
     }
 
     @Override
@@ -81,9 +98,23 @@ public class CategoryFragment extends Fragment
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == ADD_CATEGORY_REQUEST && resultCode == Activity.RESULT_OK)
         {
-            String name = data.getStringExtra("NAME");
-            categoryViewModel.add(new CategoryRequest(name));
+            CategoryRequest categoryRequest = GsonSingleton.getInstance()
+                    .fromJson(data.getStringExtra(AddCategoryActivity.EXTRA_CATEGORY), CategoryRequest.class);
+            categoryViewModel.add(categoryRequest);
             Toast.makeText(getContext(), "Catégorie créee", Toast.LENGTH_SHORT).show();
+        }
+        else if (requestCode == EDIT_CATEGORY_REQUEST && resultCode == Activity.RESULT_OK)
+        {
+            CategoryRequest courseRequest = GsonSingleton.getInstance()
+                    .fromJson(data.getStringExtra(AddCategoryActivity.EXTRA_CATEGORY), CategoryRequest.class);
+            int id = data.getIntExtra(AddCategoryActivity.EXTRA_ID, -1);
+            if (id == -1)
+            {
+                Toast.makeText(getContext(), "La catégorie ne peut pas être modifiée!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            categoryViewModel.update(courseRequest, id);
+            Toast.makeText(getContext(), "Catégorie modifiée!", Toast.LENGTH_SHORT).show();
         }
     }
 }

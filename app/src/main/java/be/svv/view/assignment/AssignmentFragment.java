@@ -3,6 +3,7 @@ package be.svv.view.assignment;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,8 +26,9 @@ import be.svv.mobileapplication.R;
 import be.svv.model.Assignment;
 import be.svv.model.Course;
 import be.svv.model.request.AssignmentRequest;
+import be.svv.service.gson.GsonSingleton;
 import be.svv.view.adapter.AssignmentAdapter;
-import be.svv.view.assignment.AddAssignmentActivity;
+import be.svv.view.course.AddEditCourseActivity;
 import be.svv.viewmodel.AssignmentViewModel;
 import be.svv.viewmodel.CourseViewModel;
 
@@ -34,6 +36,8 @@ public class AssignmentFragment extends Fragment
 {
 
     public static final int ADD_ASSIGNMENT_REQUEST = 1;
+    public static final int EDIT_ASSIGNMENT_REQUEST = 2;
+
     private AssignmentViewModel assignmentViewModel;
     private CourseViewModel courseViewModel;
     private RecyclerView recyclerView;
@@ -61,7 +65,7 @@ public class AssignmentFragment extends Fragment
                         @Override
                         public void onClick (View v)
                         {
-                            startActivityForResult(new Intent(getContext(), AddAssignmentActivity.class), ADD_ASSIGNMENT_REQUEST);
+                            startActivityForResult(new Intent(getContext(), AddEditAssignmentActivity.class), ADD_ASSIGNMENT_REQUEST);
                             //getActivity().overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
                         }
                     });
@@ -72,7 +76,6 @@ public class AssignmentFragment extends Fragment
                 }
             }
         });
-
 
         return root;
     }
@@ -96,6 +99,18 @@ public class AssignmentFragment extends Fragment
                 progressBar.setVisibility(ProgressBar.INVISIBLE);
             }
         });
+
+        adapter.setOnItemClickListener(new AssignmentAdapter.OnItemClickListener()
+        {
+            @Override
+            public void onItemClick (Assignment assignment)
+            {
+                Intent intent = new Intent(getContext(), AddEditAssignmentActivity.class);
+                intent.putExtra(AddEditAssignmentActivity.EXTRA_ASSIGNMENT, GsonSingleton.getInstance().toJson(assignment));
+                intent.putExtra(AddEditAssignmentActivity.EXTRA_ID, assignment.getId());
+                startActivityForResult(intent, EDIT_ASSIGNMENT_REQUEST);
+            }
+        });
     }
 
     @Override
@@ -104,10 +119,23 @@ public class AssignmentFragment extends Fragment
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == ADD_ASSIGNMENT_REQUEST && resultCode == Activity.RESULT_OK)
         {
-            String name = data.getStringExtra("NAME");
-            String course = data.getStringExtra("COURSE");
-            assignmentViewModel.add(new AssignmentRequest(name, course, false));
+            AssignmentRequest assignmentRequest = GsonSingleton.getInstance()
+                    .fromJson(data.getStringExtra(AddEditAssignmentActivity.EXTRA_ASSIGNMENT), AssignmentRequest.class);
+            assignmentViewModel.add(assignmentRequest);
             Toast.makeText(getContext(), "Devoir crée", Toast.LENGTH_SHORT).show();
+        }
+        else if (requestCode == EDIT_ASSIGNMENT_REQUEST && resultCode == Activity.RESULT_OK)
+        {
+            AssignmentRequest assignmentRequest = GsonSingleton.getInstance()
+                    .fromJson(data.getStringExtra(AddEditAssignmentActivity.EXTRA_ASSIGNMENT), AssignmentRequest.class);
+            int id = data.getIntExtra(AddEditAssignmentActivity.EXTRA_ID, -1);
+            if (id == -1)
+            {
+                Toast.makeText(getContext(), "Le devoir n'a pas pu être modifié!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            assignmentViewModel.update(assignmentRequest, id);
+            Toast.makeText(getContext(), "Devoir modifié avec succès!", Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -21,6 +21,7 @@ public class AddEditCourseActivity extends AppCompatActivity
 
     public static final String EXTRA_COURSE = "COURSE";
     public static final String EXTRA_ID = "ID";
+    
     private EditText editTextName;
 
     @Override
@@ -57,7 +58,7 @@ public class AddEditCourseActivity extends AppCompatActivity
             Toast.makeText(this, "Le nom ne peut pas être vide!", Toast.LENGTH_SHORT).show();
             return;
         }
-        
+
         Intent data = new Intent();
         data.putExtra(EXTRA_COURSE, GsonSingleton.getInstance().toJson(new CourseRequest(name)));
 
@@ -79,7 +80,6 @@ public class AddEditCourseActivity extends AppCompatActivity
         menuInflater.inflate(R.menu.add_menu, menu);
         return true;
     }
-
 
     @Override
     public boolean onOptionsItemSelected (@NonNull MenuItem item)

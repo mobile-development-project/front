@@ -24,7 +24,6 @@ import be.svv.model.Course;
 import be.svv.globals.Helpers;
 import be.svv.mobileapplication.R;
 import be.svv.service.gson.GsonSingleton;
-import be.svv.view.course.ShowCourseActivity;
 import be.svv.viewmodel.CourseViewModel;
 
 public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseViewHolder>
@@ -42,11 +41,6 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
     public void setCourses (List<Course> courses)
     {
         this.courses = courses;
-    }
-
-    public Course getCourseAt (int position)
-    {
-        return courses.get(position);
     }
 
     @NonNull
@@ -67,17 +61,6 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
         int sizeAssignments = currentItem.getAssignments().size();
         holder.name.setText(currentItem.getName());
         holder.assignments.setText(sizeAssignments == 0 ? "Pas de devoir" : sizeAssignments + Helpers.toPlurar("devoir", sizeAssignments));
-
-        holder.itemView.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick (View v)
-            {
-                Intent intent = new Intent(context, ShowCourseActivity.class);
-                intent.putExtra("COURSE", (GsonSingleton.getInstance().toJson(currentItem)));
-                context.startActivity(intent);
-            }
-        });
 
         holder.courseSettings.setOnClickListener(new View.OnClickListener()
         {
@@ -157,15 +140,6 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
             assignments = itemView.findViewById(R.id.course_assignements);
             name = itemView.findViewById(R.id.course_name);
             courseSettings = itemView.findViewById(R.id.course_settings);
-
-            courseSettings.setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick (View v)
-                {
-
-                }
-            });
         }
     }
 
