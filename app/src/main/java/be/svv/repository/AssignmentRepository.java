@@ -81,7 +81,20 @@ public class AssignmentRepository implements RepositoryInterface<Assignment>
     @Override
     public void delete (int id, ViewModelCallback callback)
     {
-        api.delete(id);
+        api.delete(id).enqueue(new Callback<Assignment>()
+        {
+            @Override
+            public void onResponse (Call<Assignment> call, Response<Assignment> response)
+            {
+                callback.onResponse(response);
+            }
+
+            @Override
+            public void onFailure (Call<Assignment> call, Throwable t)
+            {
+
+            }
+        });
     }
 
 
