@@ -27,6 +27,6 @@ public interface CategoryApi
     Call<Category> update (@Path("id") int id, @Body CategoryRequest request);
 
     @DELETE("categories/{id}")
-    void delete (@Path("id") int id);
+    Call<Category> delete (@Path("id") int id);
 
 }

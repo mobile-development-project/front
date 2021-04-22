@@ -29,6 +29,6 @@ public interface AssignmentApi
     Call<Assignment> update (@Path("id") int id, @Body AssignmentRequest request);
 
     @DELETE("assignments/{id}")
-    void delete (@Path("id") int id);
+    Call<Assignment> delete (@Path("id") int id);
 
 }
