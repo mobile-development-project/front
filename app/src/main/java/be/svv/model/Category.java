@@ -7,6 +7,8 @@ public class Category extends Model
 
     private String name;
 
+    private int color;
+
     private User user;
 
     public int getId ()
@@ -17,6 +19,11 @@ public class Category extends Model
     public String getName ()
     {
         return name;
+    }
+
+    public int getColor ()
+    {
+        return color;
     }
 
     public User getUser ()

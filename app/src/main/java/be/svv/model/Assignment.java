@@ -15,7 +15,7 @@ public class Assignment extends Model
 
     private Date createdAt;
 
-    private Date finishAt;
+    private String finishAt;
 
     public int getId ()
     {
@@ -67,12 +67,12 @@ public class Assignment extends Model
         this.createdAt = createdAt;
     }
 
-    public Date getFinishAt ()
+    public String getFinishAt ()
     {
         return finishAt;
     }
 
-    public void setFinishAt (Date finishAt)
+    public void setFinishAt (String finishAt)
     {
         this.finishAt = finishAt;
     }
