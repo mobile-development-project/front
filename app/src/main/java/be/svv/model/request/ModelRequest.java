@@ -1,4 +1,4 @@
 package be.svv.model.request;
 
-public class ModelRequest
+public abstract class ModelRequest
 {}

@@ -1,4 +1,4 @@
 package be.svv.model;
 
-public class Model
+public abstract class Model
 {}

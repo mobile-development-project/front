@@ -6,23 +6,32 @@ import android.os.Bundle;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.iid.InstanceIdResult;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.util.Log;
 import android.widget.Toast;
 
 import be.svv.mobileapplication.R;
+import be.svv.view.profile.ProfileFragment;
 import be.svv.view.security.LoginActivity;
 
 public class MainActivity extends AppCompatActivity implements FragmentListener
 {
+
+    private static final String DATA_FRAGMENT = "DATA_FRAGMENT";
+    private static final String HOME_FRAGMENT = "HOME_FRAGMENT";
+    private static final String PROFILE_FRAGMENT = "PROFILE_FRAGMENT";
 
     private GoogleSignInClient mGoogleSignInClient;
     private BottomNavigationView bottomNavigationView;
 
     private DataFragment dataFragment;
     private HomeFragment homeFragment;
+    private ProfileFragment profileFragment;
 
     @Override
     protected void onCreate (Bundle savedInstanceState)
@@ -37,32 +46,41 @@ public class MainActivity extends AppCompatActivity implements FragmentListener
 
         if (savedInstanceState != null)
         {
-            dataFragment = (DataFragment) getSupportFragmentManager().findFragmentByTag("DATA_FRAGMENT");
-            homeFragment = (HomeFragment) getSupportFragmentManager().findFragmentByTag("HOME_FRAGMENT");
+            dataFragment = (DataFragment) getSupportFragmentManager().findFragmentByTag(DATA_FRAGMENT);
+            homeFragment = (HomeFragment) getSupportFragmentManager().findFragmentByTag(HOME_FRAGMENT);
+            profileFragment = (ProfileFragment) getSupportFragmentManager().findFragmentByTag(PROFILE_FRAGMENT);
         }
         else
         {
             dataFragment = new DataFragment();
             homeFragment = new HomeFragment();
+            profileFragment = new ProfileFragment();
         }
 
-        if (!dataFragment.isInLayout())
-        {
-            getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment, "HOME_FRAGMENT").commit();
-        }
+        //        if (!dataFragment.isInLayout())
+        //        {
+        //            getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment, HOME_FRAGMENT).commit();
+        //        }
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment, HOME_FRAGMENT).commit();
 
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
             switch (item.getItemId())
             {
                 case R.id.navigation_home:
                     getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.container, homeFragment, "HOME_FRAGMENT")
+                            .replace(R.id.container, homeFragment, HOME_FRAGMENT)
                             .addToBackStack(null)
                             .commit();
                     break;
                 case R.id.navigation_course:
                     getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.container, dataFragment, "DATA_FRAGMENT")
+                            .replace(R.id.container, dataFragment, DATA_FRAGMENT)
+                            .addToBackStack(null)
+                            .commit();
+                    break;
+                case R.id.navigation_profile:
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.container, profileFragment, PROFILE_FRAGMENT)
                             .addToBackStack(null)
                             .commit();
                     break;
@@ -72,6 +90,7 @@ public class MainActivity extends AppCompatActivity implements FragmentListener
 
         //GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
     }
+
 
     @Override
     public void onBackPressed ()
@@ -91,7 +110,7 @@ public class MainActivity extends AppCompatActivity implements FragmentListener
     public void onAction ()
     {
         mGoogleSignInClient.signOut().addOnCompleteListener(this, task -> {
-            Toast.makeText(MainActivity.this, "Signed out successfully !", Toast.LENGTH_LONG).show();
+            Toast.makeText(MainActivity.this, "Vous êtes déconnecté!", Toast.LENGTH_LONG).show();
             startActivity(new Intent(this, LoginActivity.class));
             finish();
         });

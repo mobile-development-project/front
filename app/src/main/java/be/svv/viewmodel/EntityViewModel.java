@@ -13,7 +13,7 @@ import retrofit2.Response;
 public class EntityViewModel<T extends Model> extends ViewModel
 {
 
-    private RepositoryInterface repositoryInterface;
+    protected RepositoryInterface repositoryInterface;
     private MutableLiveData<List<T>> datas;
 
     protected <R extends RepositoryInterface> EntityViewModel (R repository)
@@ -23,7 +23,7 @@ public class EntityViewModel<T extends Model> extends ViewModel
         populateList();
     }
 
-    private void populateList ()
+    public void populateList ()
     {
         repositoryInterface.getAll(new ViewModelCallback<T>()
         {

@@ -11,4 +11,10 @@
         android:enabled="true"
         android:icon="@drawable/ic_baseline_data_usage_24"
         android:title="@string/title_data" />
+
+    <item
+        android:id="@+id/navigation_profile"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_person_24"
+        android:title="@string/title_profile" />
 </menu>

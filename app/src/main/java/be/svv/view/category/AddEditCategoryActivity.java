@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -18,12 +19,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import be.svv.mobileapplication.R;
 import be.svv.model.Category;
-import be.svv.model.Course;
 import be.svv.model.request.CategoryRequest;
 import be.svv.service.gson.GsonSingleton;
 import top.defaults.colorpicker.ColorPickerPopup;
 
-public class AddCategoryActivity extends AppCompatActivity
+public class AddEditCategoryActivity extends AppCompatActivity
 {
 
     public static final String EXTRA_CATEGORY = "CATEGORY";
@@ -48,7 +48,9 @@ public class AddCategoryActivity extends AppCompatActivity
             @Override
             public void onClick (View v)
             {
-                new ColorPickerPopup.Builder(AddCategoryActivity.this).initialColor(Color.RED)
+                InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                inputMethodManager.hideSoftInputFromWindow(v.getApplicationWindowToken(), 0);
+                new ColorPickerPopup.Builder(AddEditCategoryActivity.this).initialColor(Color.RED)
                         .okTitle("Choisir")
                         .cancelTitle("Annuler")
                         .showValue(true)

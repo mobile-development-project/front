@@ -43,6 +43,7 @@
             android:layout_width="141dp"
             android:layout_height="50dp"
             android:text="Notifications"
+            android:theme="@style/SwitchTheme"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.063"
@@ -63,7 +64,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.466" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

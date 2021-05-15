@@ -12,6 +12,23 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MobileApplication"
         android:usesCleartextTraffic="true">
+        <activity android:name="be.svv.view.agenda.ShowDayEventsActivity"></activity>
+        <activity
+            android:name="be.svv.view.agenda.AddCategoryToAgendaActivity"
+            android:parentActivityName="be.svv.view.agenda.AgendaActivity" />
+        <activity
+            android:name="be.svv.view.agenda.AgendaActivity"
+            android:launchMode="singleTop"
+            android:parentActivityName="be.svv.view.MainActivity" />
+
+        <service
+            android:name="be.svv.service.firebase.FirebaseService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
         <activity
             android:name="be.svv.view.assignment.AddEditAssignmentActivity"
             android:launchMode="singleTop"
@@ -21,7 +38,7 @@
             android:launchMode="singleTop"
             android:parentActivityName="be.svv.view.MainActivity" />
         <activity
-            android:name="be.svv.view.category.AddCategoryActivity"
+            android:name="be.svv.view.category.AddEditCategoryActivity"
             android:launchMode="singleTop"
             android:parentActivityName="be.svv.view.MainActivity" />
         <activity

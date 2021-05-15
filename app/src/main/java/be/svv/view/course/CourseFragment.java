@@ -51,7 +51,6 @@ public class CourseFragment extends Fragment
             public void onClick (View v)
             {
                 startActivityForResult(new Intent(getContext(), AddEditCourseActivity.class), ADD_COURSE_REQUEST);
-                //getActivity().overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
             }
         });
 

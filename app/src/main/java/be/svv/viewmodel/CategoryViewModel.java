@@ -8,6 +8,7 @@ public class CategoryViewModel extends EntityViewModel<Category>
 
     public CategoryViewModel ()
     {
-        super(RepositoryFactory.getRepository(Category.class));
+        super(RepositoryFactory.getInstance().getRepository(Category.class));
     }
+
 }

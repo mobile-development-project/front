@@ -1,10 +1,9 @@
 package be.svv.repository;
 
-import be.svv.model.Model;
 import be.svv.model.request.ModelRequest;
 import be.svv.viewmodel.ViewModelCallback;
 
-public interface RepositoryInterface<T extends Model>
+public interface RepositoryInterface
 {
 
     /**

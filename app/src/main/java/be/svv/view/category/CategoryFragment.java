@@ -24,10 +24,8 @@ import java.util.List;
 import be.svv.mobileapplication.R;
 import be.svv.model.Category;
 import be.svv.model.request.CategoryRequest;
-import be.svv.model.request.CourseRequest;
 import be.svv.service.gson.GsonSingleton;
 import be.svv.view.adapter.CategoryAdapter;
-import be.svv.view.course.AddEditCourseActivity;
 import be.svv.viewmodel.CategoryViewModel;
 
 public class CategoryFragment extends Fragment
@@ -52,7 +50,7 @@ public class CategoryFragment extends Fragment
             @Override
             public void onClick (View v)
             {
-                startActivityForResult(new Intent(getContext(), AddCategoryActivity.class), ADD_CATEGORY_REQUEST);
+                startActivityForResult(new Intent(getContext(), AddEditCategoryActivity.class), ADD_CATEGORY_REQUEST);
                 //getActivity().overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
             }
         });
@@ -84,9 +82,9 @@ public class CategoryFragment extends Fragment
             @Override
             public void onItemClick (Category category)
             {
-                Intent intent = new Intent(getContext(), AddCategoryActivity.class);
-                intent.putExtra(AddCategoryActivity.EXTRA_CATEGORY, GsonSingleton.getInstance().toJson(category));
-                intent.putExtra(AddCategoryActivity.EXTRA_ID, category.getId());
+                Intent intent = new Intent(getContext(), AddEditCategoryActivity.class);
+                intent.putExtra(AddEditCategoryActivity.EXTRA_CATEGORY, GsonSingleton.getInstance().toJson(category));
+                intent.putExtra(AddEditCategoryActivity.EXTRA_ID, category.getId());
                 startActivityForResult(intent, EDIT_CATEGORY_REQUEST);
             }
         });
@@ -99,15 +97,15 @@ public class CategoryFragment extends Fragment
         if (requestCode == ADD_CATEGORY_REQUEST && resultCode == Activity.RESULT_OK)
         {
             CategoryRequest categoryRequest = GsonSingleton.getInstance()
-                    .fromJson(data.getStringExtra(AddCategoryActivity.EXTRA_CATEGORY), CategoryRequest.class);
+                    .fromJson(data.getStringExtra(AddEditCategoryActivity.EXTRA_CATEGORY), CategoryRequest.class);
             categoryViewModel.add(categoryRequest);
-            Toast.makeText(getContext(), "Catégorie créee", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Catégorie créée", Toast.LENGTH_SHORT).show();
         }
         else if (requestCode == EDIT_CATEGORY_REQUEST && resultCode == Activity.RESULT_OK)
         {
             CategoryRequest courseRequest = GsonSingleton.getInstance()
-                    .fromJson(data.getStringExtra(AddCategoryActivity.EXTRA_CATEGORY), CategoryRequest.class);
-            int id = data.getIntExtra(AddCategoryActivity.EXTRA_ID, -1);
+                    .fromJson(data.getStringExtra(AddEditCategoryActivity.EXTRA_CATEGORY), CategoryRequest.class);
+            int id = data.getIntExtra(AddEditCategoryActivity.EXTRA_ID, -1);
             if (id == -1)
             {
                 Toast.makeText(getContext(), "La catégorie ne peut pas être modifiée!", Toast.LENGTH_SHORT).show();

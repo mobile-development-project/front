@@ -30,4 +30,10 @@ public class Category extends Model
     {
         return user;
     }
+
+    @Override
+    public String toString ()
+    {
+        return name;
+    }
 }

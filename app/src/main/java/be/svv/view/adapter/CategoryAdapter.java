@@ -31,6 +31,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     private List<Category> categories;
     private OnItemClickListener listener;
     private Context context;
+    private boolean settingsEnabled = true;
 
     public CategoryAdapter ()
     {
@@ -41,6 +42,12 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     {
         this.categories = categories;
     }
+
+    public void enableSettings (boolean enable)
+    {
+        settingsEnabled = enable;
+    }
+
 
     @NonNull
     @Override
@@ -58,66 +65,73 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         CategoryViewModel categoryViewModel = new ViewModelProvider((ViewModelStoreOwner) context).get(CategoryViewModel.class);
         holder.name.setText(currentItem.getName());
         holder.selectedColor.setBackgroundColor(currentItem.getColor());
-        holder.categorySettings.setOnClickListener(new View.OnClickListener()
+
+        if (settingsEnabled)
         {
-            @Override
-            public void onClick (View v)
+            holder.categorySettings.setOnClickListener(new View.OnClickListener()
             {
-                AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
-                PopupMenu popup = new PopupMenu(context, holder.categorySettings);
-                popup.inflate(R.menu.options_menu);
-                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+                @Override
+                public void onClick (View v)
                 {
-                    @Override
-                    public boolean onMenuItemClick (MenuItem item)
+                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
+                    PopupMenu popup = new PopupMenu(context, holder.categorySettings);
+                    popup.inflate(R.menu.options_menu);
+                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
                     {
-                        switch (item.getItemId())
+                        @Override
+                        public boolean onMenuItemClick (MenuItem item)
                         {
-                            case R.id.menu_edit:
-                                int position = categories.indexOf(currentItem);
-                                if (listener != null && position != RecyclerView.NO_POSITION)
-                                {
-                                    listener.onItemClick(currentItem);
-                                }
-                                return true;
-                            case R.id.menu_delete:
-                                alertDialog.setTitle("Supression");
-                                alertDialog.setMessage("Voulez-vous vraiment supprimer ce cours ?");
-                                alertDialog.setCancelable(true);
-
-                                alertDialog.setPositiveButton("Oui", new DialogInterface.OnClickListener()
-                                {
-                                    @Override
-                                    public void onClick (DialogInterface dialog, int which)
+                            switch (item.getItemId())
+                            {
+                                case R.id.menu_edit:
+                                    int position = categories.indexOf(currentItem);
+                                    if (listener != null && position != RecyclerView.NO_POSITION)
                                     {
-                                        categoryViewModel.delete(currentItem.getId());
-                                        notifyItemRemoved(categories.indexOf(currentItem));
-                                        categories.remove(currentItem);
-                                        Toast.makeText(context, "Categorie supprimée", Toast.LENGTH_SHORT).show();
+                                        listener.onItemClick(currentItem);
                                     }
-                                });
-                                alertDialog.setNeutralButton("Annuler", new DialogInterface.OnClickListener()
-                                {
-                                    @Override
-                                    public void onClick (DialogInterface dialog, int which)
+                                    return true;
+                                case R.id.menu_delete:
+                                    alertDialog.setTitle("Supression");
+                                    alertDialog.setMessage("Voulez-vous vraiment supprimer ce cours ?");
+                                    alertDialog.setCancelable(true);
+
+                                    alertDialog.setPositiveButton("Oui", new DialogInterface.OnClickListener()
                                     {
-                                        Toast.makeText(context, "Action annulée", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
+                                        @Override
+                                        public void onClick (DialogInterface dialog, int which)
+                                        {
+                                            categoryViewModel.delete(currentItem.getId());
+                                            notifyItemRemoved(categories.indexOf(currentItem));
+                                            categories.remove(currentItem);
+                                            Toast.makeText(context, "Categorie supprimée", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                    alertDialog.setNeutralButton("Annuler", new DialogInterface.OnClickListener()
+                                    {
+                                        @Override
+                                        public void onClick (DialogInterface dialog, int which)
+                                        {
+                                            Toast.makeText(context, "Action annulée", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
 
-                                AlertDialog alert = alertDialog.create();
-                                alert.show();
+                                    AlertDialog alert = alertDialog.create();
+                                    alert.show();
 
-                                return true;
-                            default:
-                                return false;
+                                    return true;
+                                default:
+                                    return false;
+                            }
                         }
-                    }
-                });
-                popup.show();
-            }
-        });
-
+                    });
+                    popup.show();
+                }
+            });
+        }
+        else
+        {
+            holder.categorySettings.setVisibility(View.GONE);
+        }
     }
 
     @Override

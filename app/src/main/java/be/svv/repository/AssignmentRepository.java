@@ -1,5 +1,7 @@
 package be.svv.repository;
 
+import android.util.Log;
+
 import java.util.List;
 
 import be.svv.model.Assignment;
@@ -12,7 +14,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AssignmentRepository implements RepositoryInterface<Assignment>
+public class AssignmentRepository implements RepositoryInterface
 {
 
     private AssignmentApi api;
@@ -97,5 +99,21 @@ public class AssignmentRepository implements RepositoryInterface<Assignment>
         });
     }
 
+    public void getNearAssignments (ViewModelCallback callback)
+    {
+        api.getNearAssignments().enqueue(new Callback<List<Assignment>>()
+        {
+            @Override
+            public void onResponse (Call<List<Assignment>> call, Response<List<Assignment>> response)
+            {
+                callback.onResponse(response);
+            }
 
+            @Override
+            public void onFailure (Call<List<Assignment>> call, Throwable t)
+            {
+
+            }
+        });
+    }
 }

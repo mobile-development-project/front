@@ -8,7 +8,7 @@ public class CourseViewModel extends EntityViewModel<Course>
 
     public CourseViewModel ()
     {
-        super(RepositoryFactory.getRepository(Course.class));
+        super(RepositoryFactory.getInstance().getRepository(Course.class));
     }
 
 }

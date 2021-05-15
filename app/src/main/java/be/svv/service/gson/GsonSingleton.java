@@ -9,13 +9,11 @@ public class GsonSingleton
 {
 
     private static GsonSingleton instance;
-    private GsonBuilder gsonBuilder;
     private Gson gson;
 
     private GsonSingleton ()
     {
-        gsonBuilder = new GsonBuilder();
-        gson = gsonBuilder.create();
+        gson = (new GsonBuilder()).create();
     }
 
     public static synchronized GsonSingleton getInstance ()
@@ -27,11 +25,25 @@ public class GsonSingleton
         return instance;
     }
 
+    /**
+     * Returns an object from json
+     *
+     * @param json
+     * @param type
+     * @param <T>
+     * @return object
+     */
     public <T> T fromJson (String json, Type type)
     {
         return gson.fromJson(json, type);
     }
 
+    /**
+     * Returns json from an object
+     *
+     * @param object
+     * @return json object
+     */
     public String toJson (Object object)
     {
         return gson.toJson(object);

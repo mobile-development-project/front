@@ -16,7 +16,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CourseRepository implements RepositoryInterface<Course>
+public class CourseRepository implements RepositoryInterface
 {
 
     private CourseApi api;
@@ -40,7 +40,6 @@ public class CourseRepository implements RepositoryInterface<Course>
             @Override
             public void onFailure (Call<List<Course>> call, Throwable t)
             {
-                Log.d("FAIL", t.getLocalizedMessage());
             }
         });
     }
@@ -59,7 +58,6 @@ public class CourseRepository implements RepositoryInterface<Course>
             @Override
             public void onFailure (Call<Course> call, Throwable t)
             {
-                Log.d("FAIL", t.getLocalizedMessage());
             }
         });
     }

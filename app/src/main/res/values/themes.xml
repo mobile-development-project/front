@@ -17,4 +17,5 @@
     <style name="Theme.MobileApplication.AppBarOverlay" parent="ThemeOverlay.AppCompat.DayNight.ActionBar" />
 
     <style name="Theme.MobileApplication.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
 </resources>

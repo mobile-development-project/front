@@ -12,7 +12,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CategoryRepository implements RepositoryInterface<Category>
+public class CategoryRepository implements RepositoryInterface
 {
 
     private CategoryApi api;
@@ -55,7 +55,6 @@ public class CategoryRepository implements RepositoryInterface<Category>
             @Override
             public void onFailure (Call<Category> call, Throwable t)
             {
-
             }
         });
     }

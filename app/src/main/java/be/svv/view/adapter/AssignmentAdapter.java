@@ -3,6 +3,7 @@ package be.svv.view.adapter;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,6 +34,8 @@ public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.As
     private List<Assignment> assignments;
     private OnItemClickListener listener;
     private Context context;
+    private boolean settingsEnabled = true;
+    private boolean notificationsEnabled = true;
 
     public AssignmentAdapter ()
     {
@@ -42,6 +45,16 @@ public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.As
     public void setAssignments (List<Assignment> assignments)
     {
         this.assignments = assignments;
+    }
+
+    public void enableSettings (boolean enable)
+    {
+        settingsEnabled = enable;
+    }
+
+    public void enableNotifications (boolean enable)
+    {
+        notificationsEnabled = enable;
     }
 
     @NonNull
@@ -63,77 +76,93 @@ public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.As
         holder.finishAt.setText(currentItem.getFinishAt());
         holder.allowNotifications.setChecked(currentItem.isAllowNotifications());
 
-        holder.allowNotifications.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+        if (notificationsEnabled)
         {
-            @Override
-            public void onCheckedChanged (CompoundButton buttonView, boolean isChecked)
+            holder.allowNotifications.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
             {
-                currentItem.setAllowNotifications(!currentItem.isAllowNotifications());
-                AssignmentViewModel assignmentViewModel = new ViewModelProvider((ViewModelStoreOwner) context).get(AssignmentViewModel.class);
-                assignmentViewModel.update(new AssignmentRequest(currentItem.getName(), Url.COURSES + currentItem.getCourse()
-                        .getId(), currentItem.isAllowNotifications(), currentItem.getFinishAt()), currentItem.getId());
-            }
-        });
-
-        holder.settings.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick (View v)
-            {
-                AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
-                PopupMenu popup = new PopupMenu(context, holder.settings);
-                popup.inflate(R.menu.options_menu);
-                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+                @Override
+                public void onCheckedChanged (CompoundButton buttonView, boolean isChecked)
                 {
-                    @Override
-                    public boolean onMenuItemClick (MenuItem item)
+                    currentItem.setAllowNotifications(!currentItem.isAllowNotifications());
+                    AssignmentViewModel assignmentViewModel = new ViewModelProvider((ViewModelStoreOwner) context).get(AssignmentViewModel.class);
+                    assignmentViewModel.update(new AssignmentRequest(currentItem.getName(), Url.COURSES + currentItem.getCourse()
+                            .getId(), currentItem.isAllowNotifications(), currentItem.getFinishAt()), currentItem.getId());
+                }
+            });
+        }
+        else
+        {
+            holder.allowNotifications.setVisibility(View.GONE);
+        }
+
+
+        if (settingsEnabled)
+        {
+            holder.settings.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick (View v)
+                {
+                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
+                    PopupMenu popup = new PopupMenu(context, holder.settings);
+                    popup.inflate(R.menu.options_menu);
+                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
                     {
-                        switch (item.getItemId())
+                        @Override
+                        public boolean onMenuItemClick (MenuItem item)
                         {
-                            case R.id.menu_edit:
-                                int position = assignments.indexOf(currentItem);
-                                if (listener != null && position != RecyclerView.NO_POSITION)
-                                {
-                                    listener.onItemClick(currentItem);
-                                }
-                                return true;
-                            case R.id.menu_delete:
-                                alertDialog.setTitle("Supression");
-                                alertDialog.setMessage("Voulez-vous vraiment supprimer ce devoir ?");
-                                alertDialog.setCancelable(true);
-
-                                alertDialog.setPositiveButton("Oui", new DialogInterface.OnClickListener()
-                                {
-                                    @Override
-                                    public void onClick (DialogInterface dialog, int which)
+                            switch (item.getItemId())
+                            {
+                                case R.id.menu_edit:
+                                    int position = assignments.indexOf(currentItem);
+                                    Log.d("TAG", position + "");
+                                    if (listener != null && position != RecyclerView.NO_POSITION)
                                     {
-                                        assignmentViewModel.delete(currentItem.getId());
-                                        notifyItemRemoved(assignments.indexOf(currentItem));
-                                        assignments.remove(currentItem);
-                                        Toast.makeText(context, "Devoir supprimé", Toast.LENGTH_SHORT).show();
+                                        listener.onItemClick(currentItem);
                                     }
-                                });
-                                alertDialog.setNeutralButton("Annuler", new DialogInterface.OnClickListener()
-                                {
-                                    @Override
-                                    public void onClick (DialogInterface dialog, int which)
+                                    return true;
+                                case R.id.menu_delete:
+                                    alertDialog.setTitle("Supression");
+                                    alertDialog.setMessage("Voulez-vous vraiment supprimer ce devoir ?");
+                                    alertDialog.setCancelable(true);
+
+                                    alertDialog.setPositiveButton("Oui", new DialogInterface.OnClickListener()
                                     {
-                                        Toast.makeText(context, "Action annulée", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
+                                        @Override
+                                        public void onClick (DialogInterface dialog, int which)
+                                        {
+                                            assignmentViewModel.delete(currentItem.getId());
+                                            notifyItemRemoved(assignments.indexOf(currentItem));
+                                            assignments.remove(currentItem);
+                                            Toast.makeText(context, "Devoir supprimé", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                    alertDialog.setNeutralButton("Annuler", new DialogInterface.OnClickListener()
+                                    {
+                                        @Override
+                                        public void onClick (DialogInterface dialog, int which)
+                                        {
+                                            Toast.makeText(context, "Action annulée", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
 
-                                AlertDialog alert = alertDialog.create();
-                                alert.show();
+                                    AlertDialog alert = alertDialog.create();
+                                    alert.show();
 
-                                return true;
-                            default:
-                                return false;
+                                    return true;
+                                default:
+                                    return false;
+                            }
                         }
-                    }
-                });
-                popup.show();
-            }
-        });
+                    });
+                    popup.show();
+                }
+            });
+        }
+        else
+        {
+            holder.settings.setVisibility(View.GONE);
+        }
 
     }
 

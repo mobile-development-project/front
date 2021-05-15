@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="button_calendar" type="id" />
+    <item name="txt_near_homeworks" type="id" />
+    <item name="recycler_view_nearest_assignments" type="id" />
+</resources>

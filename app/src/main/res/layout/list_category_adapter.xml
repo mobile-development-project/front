@@ -43,11 +43,11 @@
             android:id="@+id/selected_color_adapter"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:layout_marginStart="300dp"
-            android:layout_marginLeft="300dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
             android:background="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/category_setting"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.52" />
     </androidx.constraintlayout.widget.ConstraintLayout>

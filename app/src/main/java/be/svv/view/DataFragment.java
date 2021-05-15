@@ -17,7 +17,6 @@ import be.svv.mobileapplication.R;
 import be.svv.view.assignment.AssignmentFragment;
 import be.svv.view.category.CategoryFragment;
 import be.svv.view.course.CourseFragment;
-import be.svv.view.note.NoteFragment;
 
 public class DataFragment extends Fragment
 {
@@ -30,6 +29,7 @@ public class DataFragment extends Fragment
     public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View view = inflater.inflate(R.layout.fragment_data, container, false);
+        getActivity().setTitle("Mes données");
         return view;
     }
 
@@ -40,12 +40,10 @@ public class DataFragment extends Fragment
 
         viewPager = view.findViewById(R.id.view_pager);
         tabLayout = view.findViewById(R.id.tab_layout);
-
         viewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager(), 0);
         viewPagerAdapter.addFragment(new CourseFragment(), "Cours");
         viewPagerAdapter.addFragment(new AssignmentFragment(), "Devoirs");
         viewPagerAdapter.addFragment(new CategoryFragment(), "Catégories");
-        viewPagerAdapter.addFragment(new NoteFragment(), "Notes");
 
         viewPager.setAdapter(viewPagerAdapter);
         viewPager.setSaveEnabled(false);
@@ -54,7 +52,6 @@ public class DataFragment extends Fragment
         tabLayout.getTabAt(0).setIcon(R.drawable.ic_baseline_class_24);
         tabLayout.getTabAt(1).setIcon(R.drawable.ic_baseline_home_work_24);
         tabLayout.getTabAt(2).setIcon(R.drawable.ic_baseline_category_24);
-        tabLayout.getTabAt(3).setIcon(R.drawable.ic_baseline_sticky_note_2_24);
     }
 
 

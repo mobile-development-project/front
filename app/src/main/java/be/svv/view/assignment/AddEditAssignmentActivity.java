@@ -9,8 +9,6 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Message;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -25,7 +23,6 @@ import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -59,12 +56,10 @@ public class AddEditAssignmentActivity extends AppCompatActivity
         setContentView(R.layout.activity_add_assignment);
 
         editTextName = findViewById(R.id.edit_text_assignment_name);
-        spinner = findViewById(R.id.spinner_assignemt_course);
+        spinner = findViewById(R.id.spinner_categories_agenda);
         dateTime = findViewById(R.id.edit_text_date_time);
 
         courseViewModel = new ViewModelProvider(this).get(CourseViewModel.class);
-
-
         courseViewModel.getAll().observe(this, new Observer<List<Course>>()
         {
             @Override
@@ -142,7 +137,7 @@ public class AddEditAssignmentActivity extends AppCompatActivity
                         calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
                         calendar.set(Calendar.MINUTE, minute);
 
-                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
                         dateTime.setText(simpleDateFormat.format(calendar.getTime()));
                     }
                 };
@@ -199,7 +194,6 @@ public class AddEditAssignmentActivity extends AppCompatActivity
         menuInflater.inflate(R.menu.add_menu, menu);
         return true;
     }
-
 
     @Override
     public boolean onOptionsItemSelected (@NonNull MenuItem item)
